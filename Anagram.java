@@ -67,9 +67,7 @@ public class Anagram {
 				finala = finala + ((char)(str.charAt(i) + 32));
 			}
 			        
-	        else if (str.charAt(i) == ' ') {	              // <-- conservar espacios
-            finala = finala + ' ';
-			}
+
 			}
 		
 		return finala;

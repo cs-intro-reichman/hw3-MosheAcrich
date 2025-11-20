@@ -28,7 +28,7 @@ public class LoanCalc {
     // Computes the ending balance of a loan after n periods.
     private static double endBalance(double loan, double rate, int n, double payment) {  
         for (int i = 0; i < n; i++) {
-            loan = loan * (1 + rate / 100) - payment;
+            loan = loan * (1 + rate / 100.0) - payment;
         }
         return loan;
     }
@@ -50,7 +50,7 @@ public class LoanCalc {
         iterationCounter = 0;
 
         double lo = 0;
-        double hi = loan;
+        double hi = loan * (1 + rate / 100.0);
         double m = (lo + hi) / 2;
 
         while ((hi - lo) > epsilon) {

@@ -35,11 +35,14 @@ public class LoanCalc {
     
     // Sequential search (brute force)
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
-        double payment = loan / n;
+
+        double r = rate / 100.0;
+        double payment = (loan * r) / (1 - Math.pow(1 + r, -n));  // lower bound
+
         iterationCounter = 0;
 
         while (endBalance(loan, rate, n, payment) > 0) {
-            payment = payment + epsilon;
+            payment += epsilon;
             iterationCounter++;
         }
         return payment;
@@ -49,8 +52,11 @@ public class LoanCalc {
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {
         iterationCounter = 0;
 
-        double lo = 0;
-        double hi = loan * (1 + rate / 100.0);
+        double r = rate / 100.0;
+
+        double lo = (loan * r) / (1 - Math.pow(1 + r, -n));  // safe lower bound
+        double hi = loan * Math.pow(1 + r, n);               // safe upper bound
+
         double m = (lo + hi) / 2;
 
         while ((hi - lo) > epsilon) {

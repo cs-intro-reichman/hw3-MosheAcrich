@@ -1,7 +1,7 @@
 // Computes the periodical payment necessary to pay a given loan.
 public class LoanCalc {
     
-    static double epsilon = 0.00001;  // Approximation accuracy
+    static double epsilon = 0.0001;  // Approximation accuracy
     static int iterationCounter;    // Number of iterations 
     
     // Gets the loan data and computes the periodical payment.
@@ -27,8 +27,9 @@ public class LoanCalc {
 
     // Computes the ending balance of a loan after n periods.
     private static double endBalance(double loan, double rate, int n, double payment) {  
+        double r = rate / 100.0 / 12.0;
         for (int i = 0; i < n; i++) {
-            loan = loan * (1 + rate / 100.0) - payment;
+            loan = loan * (1 + r) - payment;
         }
         return loan;
     }
@@ -36,8 +37,8 @@ public class LoanCalc {
     // Sequential search (brute force)
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 
-        double r = rate / 100.0;
-        double payment = (loan * r) / (1 - Math.pow(1 + r, -n));  // lower bound
+        double r = rate / 100.0 / 12.0;
+        double payment = 0;
 
         iterationCounter = 0;
 
@@ -52,10 +53,10 @@ public class LoanCalc {
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {
         iterationCounter = 0;
 
-        double r = rate / 100.0;
+        double r = rate / 100.0 / 12.0;
 
-        double lo = (loan * r) / (1 - Math.pow(1 + r, -n));  // safe lower bound
-        double hi = loan * Math.pow(1 + r, n);               // safe upper bound
+        double lo = 0;
+        double hi = loan * (1 + r);
 
         double m = (lo + hi) / 2;
 

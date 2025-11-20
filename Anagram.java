@@ -28,22 +28,65 @@ public class Anagram {
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
+		
+		str1 = preProcess(str1);
+		str2 = preProcess(str2);
+		String copy = str2;
+		boolean anagra = false;
+		if(str1.length() != str2.length()) {
+			anagra = false;
+		}
+		for(int i = 0; i < str1.length(); i++){
+			anagra = false;
+			for(int j = 0; anagra == false && j < copy.length(); j++){
+				
+				if(str1.charAt(i) == copy.charAt(j)){
+					anagra = true;
+					copy = copy.substring(0, j) + copy.substring(j+1);
+					break;
+				}
+				
+			}
+			if(!anagra) return false;
+		} 
 		// Replace the following statement with your code
-		return false;
+		return true;
 	}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
 	// to lower-case, and all the other characters are deleted, except for spaces, which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
+		String finala = "";
+		for(int i = 0; i < str.length(); i++){
+			
+			if (str.charAt(i) >= 'a' && str.charAt(i) <= 'z'){
+				finala = finala + str.charAt(i);
+			}
+			else if(str.charAt(i) >= 'A' && str.charAt(i) <= 'Z'){
+				finala = finala + ((char)(str.charAt(i) + 32));
+			}
+			        
+	        else if (str.charAt(i) == ' ') {	              // <-- conservar espacios
+            finala = finala + ' ';
+			}
+			}
+		
+		return finala;
 	} 
 	   
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
+		String finalsString = "";
+		String first = str;
+		while(first.length() > 0){
+			int i = (int)(Math.random() * first.length());
+			char a = first.charAt(i);
+			finalsString = finalsString + a;
+			first = first.substring(0, i) + first.substring( i + 1);
+		}
 		// Replace the following statement with your code
-		return "";
+		return finalsString;
 	}
 }
